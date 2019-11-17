@@ -7,4 +7,6 @@ Required:
 Admin:
   - Username: admin
   - Pasword: admin
-  
+Support:
+  - Canhgianguyen@gmail.com
+  - Facebook.com/canhhui
