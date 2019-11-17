@@ -6,4 +6,5 @@ Required:
   - DevExpress 19.1.3
 Admin:
   - Username: admin
-  - P
+  - Pasword: admin
+  
