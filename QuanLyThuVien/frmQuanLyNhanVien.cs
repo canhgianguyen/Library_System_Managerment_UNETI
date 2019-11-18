@@ -37,13 +37,13 @@ namespace QuanLyThuVien
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            if ((txtTenTaiKhoan.EditValue == null) || (txtTenTaiKhoan.EditValue.ToString().Equals("")))
+            if ((txtTenTaiKhoan.EditValue == null) || (txtTenTaiKhoan.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tên Tài khoản\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenTaiKhoan.Focus();
                 return;
             }
-            if ((txtHoTen.EditValue == null) || (txtHoTen.EditValue.ToString().Equals("")))
+            if ((txtHoTen.EditValue == null) || (txtHoTen.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập họ tên\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtHoTen.Focus();
@@ -63,7 +63,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if(txtTenTaiKhoan.EditValue.ToString().Trim().Equals(dr["username"].ToString()))
+                    if(txtTenTaiKhoan.EditValue.ToString().Trim().Equals(dr["username"].ToString().Trim()))
                     {
                         check = true;
                         break;
@@ -82,7 +82,7 @@ namespace QuanLyThuVien
             {
                 checkModUser = true;                
             }                        
-            string sqlC = "insert into users(id_user, username, password, fullname, sex, state, mod, dob) values ('" + con.creatId("U", sqlR) + "', '" + txtTenTaiKhoan.EditValue.ToString().Trim() + "', 'e1adc3949ba59abbe56e057f2f883e', N'" + txtHoTen.EditValue.ToString() + "', 'False', 'False', '" + checkModUser + "', '')";
+            string sqlC = "insert into users(id_user, username, password, fullname, sex, state, mod, dob) values ('" + con.creatId("U", sqlR) + "', '" + txtTenTaiKhoan.EditValue.ToString().Trim() + "', 'e1adc3949ba59abbe56e057f2f883e', N'" + txtHoTen.EditValue.ToString().Trim() + "', 'False', 'False', '" + checkModUser + "', '')";
             if (con.exeData(sqlC))
             {
                 loadData();
@@ -97,13 +97,13 @@ namespace QuanLyThuVien
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if ((txtMaNhanVien.EditValue == null) || (txtMaNhanVien.EditValue.ToString().Equals("")))
+            if ((txtMaNhanVien.EditValue == null) || (txtMaNhanVien.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa chọn nhân viên\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtHoTen.Focus();
                 return;
             }
-            if ((txtHoTen.EditValue == null) || (txtHoTen.EditValue.ToString().Equals("")))
+            if ((txtHoTen.EditValue == null) || (txtHoTen.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập họ tên\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtHoTen.Focus();
@@ -131,7 +131,7 @@ namespace QuanLyThuVien
             }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn sửa nhân viên đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string sqlU = "update users set fullname = N'" + txtHoTen.EditValue.ToString() + "', state = N'" + checkStateUser + "', mod = '" + checkModUser + "' where id_user = '" + txtMaNhanVien.EditValue.ToString() + "'";
+                string sqlU = "update users set fullname = N'" + txtHoTen.EditValue.ToString().Trim() + "', state = N'" + checkStateUser + "', mod = '" + checkModUser + "' where id_user = '" + txtMaNhanVien.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlU))
                 {
                     loadData();
@@ -147,15 +147,51 @@ namespace QuanLyThuVien
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if ((txtMaNhanVien.EditValue == null) || (txtMaNhanVien.EditValue.ToString().Equals("")))
+            if ((txtMaNhanVien.EditValue == null) || (txtMaNhanVien.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa chọn nhân viên\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtHoTen.Focus();
                 return;
             }
+            bool checkB = false;
+            string sql = "select id_user from lendingbook";
+            DataTable dt = new DataTable();
+            dt = con.readData(sql);
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (txtMaNhanVien.EditValue.ToString().Trim().Equals(dr["id_user"].ToString().Trim()))
+                    {
+                        checkB = true;
+                        break;
+                    }
+                }
+            }
+            bool checkC = false;
+            string sqlC = "select id_user from returningbook";
+            DataTable dtC = new DataTable();
+            dtC = con.readData(sqlC);
+            if (dtC != null)
+            {
+                foreach (DataRow dr in dtC.Rows)
+                {
+                    if (txtMaNhanVien.EditValue.ToString().Trim().Equals(dr["id_user"].ToString().Trim()))
+                    {
+                        checkC = true;
+                        break;
+                    }
+                }
+            }
+            if (checkB || checkC)
+            {
+                XtraMessageBox.Show("Không thể xoá nhân viên có mã \"" + txtMaNhanVien.EditValue.ToString().Trim() + "\" do nhân viên này đang cho mượn sách hoặc nhận sách.\r\nVui lòng chọn nhân viên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnLamMoi.PerformClick();
+                return;
+            }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá nhân viên đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string sqlD = "delete from users where id_user = '" + txtMaNhanVien.EditValue.ToString() + "'";
+                string sqlD = "delete from users where id_user = '" + txtMaNhanVien.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlD))
                 {
                     loadData();

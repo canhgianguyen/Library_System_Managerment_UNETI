@@ -149,6 +149,42 @@ namespace QuanLyThuVien
                 XtraMessageBox.Show("Bạn chưa chọn độc giả để xoá\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            bool checkB = false;
+            string sql = "select id_student from lendingbook";
+            DataTable dt = new DataTable();
+            dt = con.readData(sql);
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (txtMaDocGia.EditValue.ToString().Trim().Equals(dr["id_student"].ToString().Trim()))
+                    {
+                        checkB = true;
+                        break;
+                    }
+                }
+            }
+            bool checkC = false;
+            string sqlC = "select id_student from returningbook";
+            DataTable dtC = new DataTable();
+            dtC = con.readData(sqlC);
+            if (dtC != null)
+            {
+                foreach (DataRow dr in dtC.Rows)
+                {
+                    if (txtMaDocGia.EditValue.ToString().Trim().Equals(dr["id_student"].ToString().Trim()))
+                    {
+                        checkC = true;
+                        break;
+                    }
+                }
+            }
+            if (checkB || checkC)
+            {
+                XtraMessageBox.Show("Không thể xoá độc giả có mã \"" + txtMaDocGia.EditValue.ToString().Trim() + "\" do độc giả này đã mượn hoặc trả sách.\r\nVui lòng chọn độc giả khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnLamMoi.PerformClick();
+                return;
+            }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá độc giả đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string sqlD = "delete from student where id_student = '" + txtMaDocGia.EditValue.ToString() + "'";

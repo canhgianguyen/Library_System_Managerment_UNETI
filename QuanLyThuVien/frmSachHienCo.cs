@@ -17,6 +17,7 @@ namespace QuanLyThuVien
         string sqlR = "select provided.id_provided, provided.id_bookprovider, provided.id_book, book.bookname, provided.date, provided.amount, provided.deposit from book join provided on provided.id_book = book.id_book";
         string sqlRBP = "select * from bookprovider";
         string sqlRB = "select id_book, bookname from book";
+        string maCungCap = "";
 
         public frmSachHienCo()
         {
@@ -98,7 +99,7 @@ namespace QuanLyThuVien
                 XtraMessageBox.Show("Bạn chưa chọn sách để thêm vào thư viện\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if ((txtSoLuong.EditValue == null) || (txtSoLuong.EditValue.ToString().Equals("")))
+            if ((txtSoLuong.EditValue == null) || (txtSoLuong.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập số lượng\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtSoLuong.Focus();
@@ -106,7 +107,7 @@ namespace QuanLyThuVien
             }
             try
             {
-                soLuong = Int32.Parse(txtSoLuong.EditValue.ToString());
+                soLuong = Int32.Parse(txtSoLuong.EditValue.ToString().Trim());
                 if (soLuong< 1)
                 {
                     XtraMessageBox.Show("Số lượng sách không được nhỏ hơn 1\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -120,7 +121,7 @@ namespace QuanLyThuVien
                 txtSoLuong.Focus();
                 return;
             }
-            if ((txtDeposit.EditValue == null) || (txtDeposit.EditValue.ToString().Equals("")))
+            if ((txtDeposit.EditValue == null) || (txtDeposit.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tiền đặt cọc\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtDeposit.Focus();
@@ -128,7 +129,7 @@ namespace QuanLyThuVien
             }
             try
             {
-                deposit = Int32.Parse(txtDeposit.EditValue.ToString());
+                deposit = Int32.Parse(txtDeposit.EditValue.ToString().Trim());
                 if (soLuong < 1)
                 {
                     XtraMessageBox.Show("Tiền đặt cọc không được nhỏ hơn 1\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -138,7 +139,6 @@ namespace QuanLyThuVien
             }
             catch (Exception)
             {
-
                 XtraMessageBox.Show("Tiền đặt cọc phải là số\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtDeposit.Focus();
                 return;
@@ -151,7 +151,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (txtMaSach.EditValue.ToString().Equals(dr["id_book"].ToString()) && lueNhaCungCap.EditValue.ToString().Equals(dr["id_bookprovider"].ToString()))
+                    if (txtMaSach.EditValue.ToString().Trim().Equals(dr["id_book"].ToString().Trim()) && lueNhaCungCap.EditValue.ToString().Trim().Equals(dr["id_bookprovider"].ToString().Trim()))
                     {
                         checkB = true;
                         break;
@@ -160,10 +160,10 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString() + "\" thuộc nhà cung cấp có mã \"" + lueNhaCungCap.EditValue.ToString().Trim() + "\" đã được thêm vào thư viện\r\nVui lòng chọn sách khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString().Trim() + "\" thuộc nhà cung cấp có mã \"" + lueNhaCungCap.EditValue.ToString().Trim() + "\" đã được thêm vào thư viện\r\nVui lòng chọn sách khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string sqlC = "insert into provided values ('" + con.creatId("P", sqlR) + "', '" + lueNhaCungCap.EditValue.ToString() + "', '" + txtMaSach.EditValue.ToString() + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + soLuong + "', '" + deposit + "')";
+            string sqlC = "insert into provided values ('" + con.creatId("P", sqlR) + "', '" + lueNhaCungCap.EditValue.ToString().Trim() + "', '" + txtMaSach.EditValue.ToString().Trim() + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + soLuong + "', '" + deposit + "')";
             if (con.exeData(sqlC))
             {
                 loadData();
@@ -180,14 +180,14 @@ namespace QuanLyThuVien
         {
             int soLuong = -1;
             int deposit = -1;            
-            if ((txtSoLuong.EditValue == null) || (txtMaSach.EditValue == null) || (lueNhaCungCap.EditValue.Equals("")))
+            if ((txtSoLuong.EditValue == null) || (txtMaSach.EditValue == null) || (lueNhaCungCap.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa chọn sách để sửa\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             try
             {
-                soLuong = Int32.Parse(txtSoLuong.EditValue.ToString());
+                soLuong = Int32.Parse(txtSoLuong.EditValue.ToString().Trim());
                 if (soLuong < 1)
                 {
                     XtraMessageBox.Show("Số lượng sách không được nhỏ hơn 1\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -198,11 +198,11 @@ namespace QuanLyThuVien
             catch (Exception)
             {
 
-                XtraMessageBox.Show("Số luọng phải là số\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Số lượng phải là số\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtSoLuong.Focus();
                 return;
             }
-            if ((txtDeposit.EditValue == null) || (txtDeposit.EditValue.ToString().Equals("")))
+            if ((txtDeposit.EditValue == null) || (txtDeposit.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tiền đặt cọc\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtDeposit.Focus();
@@ -210,7 +210,7 @@ namespace QuanLyThuVien
             }
             try
             {
-                deposit = Int32.Parse(txtDeposit.EditValue.ToString());
+                deposit = Int32.Parse(txtDeposit.EditValue.ToString().Trim());
                 if (soLuong < 1)
                 {
                     XtraMessageBox.Show("Tiền đặt cọc không được nhỏ hơn 1\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -227,7 +227,7 @@ namespace QuanLyThuVien
             }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn sửa sách đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {                
-                string sqlU = "update provided set amount = '" + soLuong + "', deposit = '" + deposit + "' where id_bookprovider = '" + lueNhaCungCap.EditValue.ToString() + "' and id_book = '" + txtMaSach.EditValue.ToString() + "'";
+                string sqlU = "update provided set amount = '" + soLuong + "', deposit = '" + deposit + "' where id_bookprovider = '" + lueNhaCungCap.EditValue.ToString().Trim() + "' and id_book = '" + txtMaSach.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlU))
                 {
                     loadData();
@@ -243,15 +243,35 @@ namespace QuanLyThuVien
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if ((txtSoLuong.EditValue == null) || (txtMaSach.EditValue == null) || (lueNhaCungCap.EditValue.Equals("")) || (txtSoLuong.EditValue.ToString().Equals("")))
+            if ((txtSoLuong.EditValue == null) || (txtMaSach.EditValue == null) || (lueNhaCungCap.EditValue.ToString().Trim().Equals("")) || (txtSoLuong.EditValue.ToString().Trim().Equals("")) || (txtDeposit.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa chọn sách để xoá\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
+            bool checkB = false;
+            string sql = "select id_provided from lendingbook";
+            DataTable dt = new DataTable();
+            dt = con.readData(sql);
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (maCungCap.Trim().Equals(dr["id_provided"].ToString().Trim()))
+                    {
+                        checkB = true;
+                        break;
+                    }
+                }
+            }
+            if (checkB)
+            {
+                XtraMessageBox.Show("Không thể xoá sách có mã cung cấp \"" + maCungCap.Trim() + "\" do có độc giả đang mượn sách này.\r\nVui lòng chọn sách khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnLamMoi.PerformClick();
+                return;
+            }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá sách đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string sqlD = "delete from provided where id_bookprovider = '" + lueNhaCungCap.EditValue.ToString() + "' and id_book = '" + txtMaSach.EditValue.ToString() + "'";
+                string sqlD = "delete from provided where id_bookprovider = '" + lueNhaCungCap.EditValue.ToString().Trim() + "' and id_book = '" + txtMaSach.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlD))
                 {
                     loadData();
@@ -282,6 +302,7 @@ namespace QuanLyThuVien
             string colBookName = "bookname";
             string colAmount = "amount";
             string colDeposit = "deposit";
+            string colIDProvided = "id_provided";
             if ((gvSachHienCo.GetRowCellValue(row_index, id_bookprovider) != null) && (gvSachHienCo.GetRowCellValue(row_index, colIDBook) != null) && (gvSachHienCo.GetRowCellValue(row_index, colBookName) != null) && (gvSachHienCo.GetRowCellValue(row_index, colAmount) != null))
             {
                 lueNhaCungCap.EditValue = gvSachHienCo.GetRowCellValue(row_index, colIDProvider).ToString();
@@ -289,6 +310,7 @@ namespace QuanLyThuVien
                 txtTenSach.EditValue = gvSachHienCo.GetRowCellValue(row_index, colBookName).ToString();
                 txtSoLuong.EditValue = gvSachHienCo.GetRowCellValue(row_index, colAmount).ToString();
                 txtDeposit.EditValue = gvSachHienCo.GetRowCellValue(row_index, colDeposit).ToString();
+                maCungCap = gvSachHienCo.GetRowCellValue(row_index, colIDProvided).ToString();
             }
         }
 

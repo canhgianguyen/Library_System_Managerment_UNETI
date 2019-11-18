@@ -93,13 +93,13 @@ namespace QuanLyThuVien
 
         private void btnLogin_Click(object sender, EventArgs e)
         {            
-            if(txtUsername.EditValue == null)
+            if(txtUsername.EditValue == null || txtUsername.EditValue.ToString().Trim().Equals(""))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tên đăng nhập \r\nVui lòng nhập!", "Đăng nhập", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtUsername.Focus();
                 return;
             }
-            if (txtPassword.EditValue == null)
+            if (txtPassword.EditValue == null || txtPassword.EditValue.ToString().Trim().Equals(""))
             {
                 XtraMessageBox.Show("Bạn chưa nhập mật khẩu \r\nVui lòng nhập!", "Đăng nhập", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtPassword.Focus();

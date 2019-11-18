@@ -55,37 +55,37 @@ namespace QuanLyThuVien
         {
             int namXuatban = -1;
             int soTrang = -1;            
-            if ((txtTenSach.EditValue == null) || (txtTenSach.EditValue.ToString().Equals("")))
+            if ((txtTenSach.EditValue == null) || (txtTenSach.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tên sách\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenSach.Focus();
                 return;
             }
-            if ((txtTacGia.EditValue == null) || (txtTacGia.EditValue.ToString().Equals("")))
+            if ((txtTacGia.EditValue == null) || (txtTacGia.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tên tác giả\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTacGia.Focus();
                 return;
             }
-            if ((txtNhaXuatBan.EditValue == null) || (txtNhaXuatBan.EditValue.ToString().Equals("")))
+            if ((txtNhaXuatBan.EditValue == null) || (txtNhaXuatBan.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập nhà xuất bản\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtNhaXuatBan.Focus();
                 return;
             }
-            if ((txtNamXuatBan.EditValue == null) || (txtNamXuatBan.EditValue.ToString().Equals("")))
+            if ((txtNamXuatBan.EditValue == null) || (txtNamXuatBan.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập năm xuất bản\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtNamXuatBan.Focus();
                 return;
             }
-            if ((txtSoTrang.EditValue == null) || (txtSoTrang.EditValue.ToString().Equals("")))
+            if ((txtSoTrang.EditValue == null) || (txtSoTrang.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập số trang\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtSoTrang.Focus();
                 return;
             }
-            if (lueLoaiSach.EditValue.Equals(""))
+            if (lueLoaiSach.EditValue.ToString().Trim().Equals(""))
             {
                 XtraMessageBox.Show("Bạn chưa chọn loại sách\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lueLoaiSach.Focus();
@@ -93,7 +93,7 @@ namespace QuanLyThuVien
             }
             try
             {
-                namXuatban = Int32.Parse(txtNamXuatBan.EditValue.ToString());
+                namXuatban = Int32.Parse(txtNamXuatBan.EditValue.ToString().Trim());
                 if ((namXuatban < 1) || (namXuatban > DateTime.Now.Year))
                 {
                     XtraMessageBox.Show("Năm xuất bản không được nhỏ hơn 1 hoặc lớn hơn năm hiện tại\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -110,7 +110,7 @@ namespace QuanLyThuVien
             }
             try
             {
-                soTrang = Int32.Parse(txtSoTrang.EditValue.ToString());
+                soTrang = Int32.Parse(txtSoTrang.EditValue.ToString().Trim());
                 if (soTrang < 1)
                 {
                     XtraMessageBox.Show("Số trang không được phép nhỏ hơn 1\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -132,7 +132,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (lueLoaiSach.EditValue.ToString().Trim().Equals(dr["id_booktype"].ToString()) && txtTenSach.EditValue.ToString().Trim().Equals(dr["bookname"].ToString()))
+                    if (lueLoaiSach.EditValue.ToString().Trim().Equals(dr["id_booktype"].ToString().Trim()) && txtTenSach.EditValue.ToString().Trim().Equals(dr["bookname"].ToString().Trim()))
                     {
                         checkB = true;
                         break;
@@ -141,11 +141,11 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString() + "\" thuộc loại sách có mã \"" + lueLoaiSach.EditValue.ToString() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString().Trim() + "\" thuộc loại sách có mã \"" + lueLoaiSach.EditValue.ToString().Trim() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnLamMoi.PerformClick();
                 return;
             }
-            string sqlC = "insert into book values ('" + con.creatId("B", sqlR) + "', '" + lueLoaiSach.EditValue.ToString() + "', N'" + txtTenSach.EditValue.ToString() + "', N'" + txtTacGia.EditValue.ToString() + "', N'" + txtNhaXuatBan.EditValue.ToString() + "', '" + namXuatban + "', '" + soTrang + "')";
+            string sqlC = "insert into book values ('" + con.creatId("B", sqlR) + "', '" + lueLoaiSach.EditValue.ToString().Trim() + "', N'" + txtTenSach.EditValue.ToString().Trim() + "', N'" + txtTacGia.EditValue.ToString().Trim() + "', N'" + txtNhaXuatBan.EditValue.ToString().Trim() + "', '" + namXuatban + "', '" + soTrang + "')";
             if (con.exeData(sqlC))
             {
                 loadData();
@@ -165,19 +165,19 @@ namespace QuanLyThuVien
                 XtraMessageBox.Show("Bạn chưa chọn sách để sửa\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if ((txtTenSach.EditValue == null) || (txtTenSach.EditValue.ToString().Equals("")))
+            if ((txtTenSach.EditValue == null) || (txtTenSach.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Tên sách không được phép để trống\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenSach.Focus();
                 return;
             }
-            if ((txtTacGia.EditValue == null) || (txtTacGia.EditValue.ToString().Equals("")))
+            if ((txtTacGia.EditValue == null) || (txtTacGia.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Tên tác giả không được phép để trống\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTacGia.Focus();
                 return;
             }
-            if ((txtNhaXuatBan.EditValue == null) || (txtNhaXuatBan.EditValue.ToString().Equals("")))
+            if ((txtNhaXuatBan.EditValue == null) || (txtNhaXuatBan.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Nhà xuất bản không được phép để trống\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtNhaXuatBan.Focus();
@@ -187,7 +187,7 @@ namespace QuanLyThuVien
             int soTrang = -1;
             try
             {
-                namXuatban = Int32.Parse(txtNamXuatBan.EditValue.ToString());
+                namXuatban = Int32.Parse(txtNamXuatBan.EditValue.ToString().Trim());
                 if ((namXuatban < 1) || (namXuatban > DateTime.Now.Year))
                 {
                     XtraMessageBox.Show("Năm xuất bản không được nhỏ hơn 1 hoặc lớn hơn năm hiện tại\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -204,7 +204,7 @@ namespace QuanLyThuVien
             }
             try
             {
-                soTrang = Int32.Parse(txtSoTrang.EditValue.ToString());
+                soTrang = Int32.Parse(txtSoTrang.EditValue.ToString().Trim());
                 if (soTrang < 1)
                 {
                     XtraMessageBox.Show("Số trang không được phép nhỏ hơn 1\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -226,7 +226,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (lueLoaiSach.EditValue.ToString().Trim().Equals(dr["id_booktype"].ToString()) && txtTenSach.EditValue.ToString().Trim().Equals(dr["bookname"].ToString()))
+                    if (lueLoaiSach.EditValue.ToString().Trim().Equals(dr["id_booktype"].ToString().Trim()) && txtTenSach.EditValue.ToString().Trim().Equals(dr["bookname"].ToString().Trim()))
                     {
                         checkB = true;
                         break;
@@ -235,13 +235,13 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString() + "\" thuộc loại sách có mã \"" + lueLoaiSach.EditValue.ToString() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString().Trim() + "\" thuộc loại sách có mã \"" + lueLoaiSach.EditValue.ToString().Trim() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnLamMoi.PerformClick();
                 return;
             }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn sửa sách đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {                
-                string sqlU = "update book set bookname = N'" + txtTenSach.EditValue.ToString() + "', author = N'" + txtTacGia.EditValue.ToString() + "', publisher = N'" + txtNhaXuatBan.EditValue.ToString() + "', publishingyear = '" + namXuatban + "', pages = '" + soTrang + "', id_booktype = '" + lueLoaiSach.EditValue.ToString() + "' where id_book = '" + txtMaSach.EditValue.ToString() + "'";
+                string sqlU = "update book set bookname = N'" + txtTenSach.EditValue.ToString().Trim() + "', author = N'" + txtTacGia.EditValue.ToString().Trim() + "', publisher = N'" + txtNhaXuatBan.EditValue.ToString().Trim() + "', publishingyear = '" + namXuatban + "', pages = '" + soTrang + "', id_booktype = '" + lueLoaiSach.EditValue.ToString().Trim() + "' where id_book = '" + txtMaSach.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlU))
                 {
                     loadData();
@@ -262,10 +262,30 @@ namespace QuanLyThuVien
                 XtraMessageBox.Show("Bạn chưa chọn sách để xoá\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
+            bool checkB = false;
+            string sql = "select id_book from provided";
+            DataTable dt = new DataTable();
+            dt = con.readData(sql);
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (txtMaSach.EditValue.ToString().Trim().Equals(dr["id_book"].ToString().Trim()))
+                    {
+                        checkB = true;
+                        break;
+                    }
+                }
+            }
+            if (checkB)
+            {
+                XtraMessageBox.Show("Sách có tên \"" + txtTenSach.EditValue.ToString().Trim() + "\" đang có trong thư viện nên không được phép xoá.\r\nVui lòng chọn sách khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnLamMoi.PerformClick();
+                return;
+            }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá sách đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string sqlD = "delete from book where id_book = '" + txtMaSach.EditValue.ToString() + "'";
+                string sqlD = "delete from book where id_book = '" + txtMaSach.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlD))
                 {
                     loadData();

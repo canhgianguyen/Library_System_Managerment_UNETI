@@ -21,7 +21,7 @@ namespace QuanLyThuVien
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            if((txtDate.EditValue == null) || (txtDate.EditValue.ToString().Equals("")))
+            if((txtDate.EditValue == null) || (txtDate.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa chọn ngày hẹn trả sách\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

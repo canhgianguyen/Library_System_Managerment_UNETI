@@ -37,7 +37,7 @@ namespace QuanLyThuVien
 
         private void simpleButton1_Click(object sender, EventArgs e) //btnThem
         {
-            if ((txtTenNhaCungCap.EditValue == null) || (txtTenNhaCungCap.EditValue.ToString().Equals("")))
+            if ((txtTenNhaCungCap.EditValue == null) || (txtTenNhaCungCap.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tên nhà cung cấp\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenNhaCungCap.Focus();
@@ -51,7 +51,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (txtTenNhaCungCap.EditValue.ToString().Trim().Equals(dr["providername"].ToString()))
+                    if (txtTenNhaCungCap.EditValue.ToString().Trim().Equals(dr["providername"].ToString().Trim()))
                     {
                         checkB = true;
                         break;
@@ -60,11 +60,11 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Nhà cung cấp có tên \"" + txtTenNhaCungCap.EditValue.ToString() +"\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Nhà cung cấp có tên \"" + txtTenNhaCungCap.EditValue.ToString().Trim() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtLamMoi.PerformClick();
                 return;
             }
-            string sqlC = "insert into bookprovider values ('" + con.creatId("BP", sqlR) + "', N'" + txtTenNhaCungCap.EditValue.ToString() + "')";
+            string sqlC = "insert into bookprovider values ('" + con.creatId("BP", sqlR) + "', N'" + txtTenNhaCungCap.EditValue.ToString().Trim() + "')";
             if (con.exeData(sqlC))
             {
                 loadData();
@@ -81,10 +81,10 @@ namespace QuanLyThuVien
         {
             if (txtMaNhaCungcap.EditValue == null)
             {
-                XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp để sửa\r\nVui lòng chọn!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp để sửa\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if ((txtTenNhaCungCap.EditValue == null) || (txtTenNhaCungCap.EditValue.ToString().Equals("")))
+            if ((txtTenNhaCungCap.EditValue == null) || (txtTenNhaCungCap.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Tên nhà cung cấp không được phép để trống\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenNhaCungCap.Focus();
@@ -98,7 +98,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (txtTenNhaCungCap.EditValue.ToString().Trim().Equals(dr["providername"].ToString()))
+                    if (txtTenNhaCungCap.EditValue.ToString().Trim().Equals(dr["providername"].ToString().Trim()))
                     {
                         checkB = true;
                         break;
@@ -107,13 +107,13 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Nhà cung cấp có tên \"" + txtTenNhaCungCap.EditValue.ToString() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Nhà cung cấp có tên \"" + txtTenNhaCungCap.EditValue.ToString().Trim() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtLamMoi.PerformClick();
                 return;
             }
-            if (XtraMessageBox.Show("Bạn có chắc chắn muốn sửa nhà cung cấp đang chọn?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (XtraMessageBox.Show("Bạn có chắc chắn muốn sửa nhà cung cấp đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string sqlU = "update bookprovider set providername = N'" + txtTenNhaCungCap.EditValue.ToString() + "' where id_bookprovider = '" + txtMaNhaCungcap.EditValue.ToString() + "'";
+                string sqlU = "update bookprovider set providername = N'" + txtTenNhaCungCap.EditValue.ToString().Trim() + "' where id_bookprovider = '" + txtMaNhaCungcap.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlU))
                 {
                     loadData();
@@ -131,13 +131,33 @@ namespace QuanLyThuVien
         {
             if(txtMaNhaCungcap.EditValue == null)
             {
-                XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp để xoá\r\nVui lòng chọn!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp để xoá\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-            if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá nhà cung cấp đang chọn?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            bool checkB = false;
+            string sql = "select id_bookprovider from provided";
+            DataTable dt = new DataTable();
+            dt = con.readData(sql);
+            if (dt != null)
             {
-                string sqlD = "delete from bookprovider where id_bookprovider = '" + txtMaNhaCungcap.EditValue.ToString() + "'";
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (txtMaNhaCungcap.EditValue.ToString().Trim().Equals(dr["id_bookprovider"].ToString().Trim()))
+                    {
+                        checkB = true;
+                        break;
+                    }
+                }
+            }
+            if (checkB)
+            {
+                XtraMessageBox.Show("Không thể xoá nhà cung cấp có mã \"" + txtMaNhaCungcap.EditValue.ToString().Trim() + "\" do đã có sách thuộc nhà cung cấp này.\r\nVui lòng chọn nhà cung cấp khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtLamMoi.PerformClick();
+                return;
+            }
+            if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá nhà cung cấp đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string sqlD = "delete from bookprovider where id_bookprovider = '" + txtMaNhaCungcap.EditValue.ToString().Trim() + "'";
                 if(con.exeData(sqlD))
                 {
                     loadData();

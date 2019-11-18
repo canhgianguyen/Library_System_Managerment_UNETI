@@ -36,7 +36,7 @@ namespace QuanLyThuVien
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            if ((txtTenLoaiSach.EditValue == null) || (txtTenLoaiSach.EditValue.ToString().Equals("")))
+            if ((txtTenLoaiSach.EditValue == null) || (txtTenLoaiSach.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Bạn chưa nhập tên loại sách\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenLoaiSach.Focus();
@@ -59,11 +59,11 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Loại sách có tên \"" + txtTenLoaiSach.EditValue.ToString() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Loại sách có tên \"" + txtTenLoaiSach.EditValue.ToString().Trim() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnLamMoi.PerformClick();
                 return;
             }
-            string sqlC = "insert into booktype values ('" + con.creatId("BT", sqlR) + "', N'" + txtTenLoaiSach.EditValue.ToString() + "')";
+            string sqlC = "insert into booktype values ('" + con.creatId("BT", sqlR) + "', N'" + txtTenLoaiSach.EditValue.ToString().Trim() + "')";
             if (con.exeData(sqlC))
             {
                 loadData();
@@ -83,7 +83,7 @@ namespace QuanLyThuVien
                 XtraMessageBox.Show("Bạn chưa chọn loại sách để sửa\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if ((txtTenLoaiSach.EditValue == null) || (txtTenLoaiSach.EditValue.ToString().Equals("")))
+            if ((txtTenLoaiSach.EditValue == null) || (txtTenLoaiSach.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Tên loại sách không được phép để trống\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTenLoaiSach.Focus();
@@ -97,7 +97,7 @@ namespace QuanLyThuVien
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (txtTenLoaiSach.EditValue.ToString().Trim().Equals(dr["booktypename"].ToString()))
+                    if (txtTenLoaiSach.EditValue.ToString().Trim().Equals(dr["booktypename"].ToString().Trim()))
                     {
                         checkB = true;
                         break;
@@ -106,13 +106,13 @@ namespace QuanLyThuVien
             }
             if (checkB)
             {
-                XtraMessageBox.Show("Loại sách có tên \"" + txtTenLoaiSach.EditValue.ToString() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Loại sách có tên \"" + txtTenLoaiSach.EditValue.ToString().Trim() + "\" đã tồn tại\r\nVui lòng nhập tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnLamMoi.PerformClick();
                 return;
             }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn sửa loại sách đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {                
-                string sqlU = "update booktype set booktypename = N'" + txtTenLoaiSach.EditValue.ToString() + "' where id_booktype = '" + txtMaLoaiSach.EditValue.ToString() + "'";
+                string sqlU = "update booktype set booktypename = N'" + txtTenLoaiSach.EditValue.ToString().Trim() + "' where id_booktype = '" + txtMaLoaiSach.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlU))
                 {
                     loadData();
@@ -133,10 +133,30 @@ namespace QuanLyThuVien
                 XtraMessageBox.Show("Bạn chưa chọn loại sách để xoá\r\nVui lòng chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
+            bool checkB = false;
+            string sql = "select id_booktype from book";
+            DataTable dt = new DataTable();
+            dt = con.readData(sql);
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (txtMaLoaiSach.EditValue.ToString().Trim().Equals(dr["id_booktype"].ToString().Trim()))
+                    {
+                        checkB = true;
+                        break;
+                    }
+                }
+            }
+            if (checkB)
+            {
+                XtraMessageBox.Show("Không thể xoá loại sách có mã \"" + txtMaLoaiSach.EditValue.ToString().Trim() + "\" do đã có sách thuộc loại sách này.\r\nVui lòng chọn loại sách khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnLamMoi.PerformClick();
+                return;
+            }
             if (XtraMessageBox.Show("Bạn có chắc chắn muốn xoá loại sách đang chọn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string sqlD = "delete from booktype where id_booktype = '" + txtMaLoaiSach.EditValue.ToString() + "'";
+                string sqlD = "delete from booktype where id_booktype = '" + txtMaLoaiSach.EditValue.ToString().Trim() + "'";
                 if (con.exeData(sqlD))
                 {
                     loadData();

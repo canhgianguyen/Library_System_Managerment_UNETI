@@ -23,7 +23,7 @@ namespace QuanLyThuVien
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            if ((txtHoTen.EditValue == null) || (txtHoTen.EditValue.ToString().Equals("")))
+            if ((txtHoTen.EditValue == null) || (txtHoTen.EditValue.ToString().Trim().Equals("")))
             {
                 XtraMessageBox.Show("Họ tên là bắt buộc\r\nVui lòng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtHoTen.Focus();
@@ -38,7 +38,7 @@ namespace QuanLyThuVien
             {
                 check = true;
             }
-            string sqlU = "update users set fullname = N'" + txtHoTen.EditValue.ToString() + "', dob = '" + Convert.ToDateTime(txtNgaySinh.EditValue.ToString()).ToString("yyyy-MM-dd") + "', sex = '" + check + "', number = '" + txtSoDienThoai.EditValue.ToString() + "', address = N'" + txtDiaChi.EditValue.ToString() + "' where id_user = '" + id + "'";
+            string sqlU = "update users set fullname = N'" + txtHoTen.EditValue.ToString().Trim() + "', dob = '" + Convert.ToDateTime(txtNgaySinh.EditValue.ToString()).ToString("yyyy-MM-dd") + "', sex = '" + check + "', number = '" + txtSoDienThoai.EditValue.ToString().Trim() + "', address = N'" + txtDiaChi.EditValue.ToString().Trim() + "' where id_user = '" + id + "'";
             if (con.exeData(sqlU))
             {
                 XtraMessageBox.Show("Thay đổi thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
