@@ -299,6 +299,7 @@
             this.btnSachBiHong.Id = 2;
             this.btnSachBiHong.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSachBiHong.ImageOptions.Image")));
             this.btnSachBiHong.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSachBiHong.ImageOptions.LargeImage")));
+            this.btnSachBiHong.LargeWidth = 70;
             this.btnSachBiHong.Name = "btnSachBiHong";
             this.btnSachBiHong.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSachBiHong_ItemClick);
             // 

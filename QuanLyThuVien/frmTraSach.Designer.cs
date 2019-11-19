@@ -150,6 +150,7 @@
             this.gvDocGia.OptionsBehavior.Editable = false;
             this.gvDocGia.OptionsFind.AlwaysVisible = true;
             this.gvDocGia.OptionsFind.FindDelay = 100;
+            this.gvDocGia.OptionsFind.FindNullPrompt = "Tìm kiếm...";
             this.gvDocGia.OptionsFind.ShowClearButton = false;
             this.gvDocGia.OptionsFind.ShowCloseButton = false;
             this.gvDocGia.OptionsFind.ShowFindButton = false;
@@ -291,7 +292,7 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(23, 179);
+            this.labelControl5.Location = new System.Drawing.Point(24, 179);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(87, 19);
             this.labelControl5.TabIndex = 13;
@@ -299,7 +300,7 @@
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(23, 143);
+            this.labelControl4.Location = new System.Drawing.Point(24, 143);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(47, 19);
             this.labelControl4.TabIndex = 12;
@@ -307,7 +308,7 @@
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(23, 108);
+            this.labelControl3.Location = new System.Drawing.Point(24, 108);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(62, 18);
             this.labelControl3.TabIndex = 11;
@@ -315,7 +316,7 @@
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(23, 72);
+            this.labelControl2.Location = new System.Drawing.Point(24, 72);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(46, 19);
             this.labelControl2.TabIndex = 10;
@@ -323,7 +324,7 @@
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(23, 36);
+            this.labelControl1.Location = new System.Drawing.Point(24, 36);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(74, 19);
             this.labelControl1.TabIndex = 9;
@@ -373,9 +374,9 @@
             // groupControl3
             // 
             this.groupControl3.Controls.Add(this.gcSachDangMuon);
-            this.groupControl3.Location = new System.Drawing.Point(12, 13);
+            this.groupControl3.Location = new System.Drawing.Point(12, 12);
             this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(1207, 448);
+            this.groupControl3.Size = new System.Drawing.Size(1207, 450);
             this.groupControl3.TabIndex = 4;
             this.groupControl3.Text = "Sách đang mượn";
             // 
@@ -387,7 +388,7 @@
             this.gcSachDangMuon.Name = "gcSachDangMuon";
             this.gcSachDangMuon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.btnTraSach});
-            this.gcSachDangMuon.Size = new System.Drawing.Size(1203, 419);
+            this.gcSachDangMuon.Size = new System.Drawing.Size(1203, 421);
             this.gcSachDangMuon.TabIndex = 0;
             this.gcSachDangMuon.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvSachDangMuon});
@@ -410,6 +411,7 @@
             this.gvSachDangMuon.Name = "gvSachDangMuon";
             this.gvSachDangMuon.OptionsFind.AlwaysVisible = true;
             this.gvSachDangMuon.OptionsFind.FindDelay = 100;
+            this.gvSachDangMuon.OptionsFind.FindNullPrompt = "Tìm kiếm...";
             this.gvSachDangMuon.OptionsFind.ShowClearButton = false;
             this.gvSachDangMuon.OptionsFind.ShowCloseButton = false;
             this.gvSachDangMuon.OptionsFind.ShowFindButton = false;
@@ -554,7 +556,7 @@
             this.layoutControlItem3.Control = this.groupControl3;
             this.layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(1211, 452);
+            this.layoutControlItem3.Size = new System.Drawing.Size(1211, 454);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
