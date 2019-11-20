@@ -56,6 +56,8 @@
             this.btnSachQuaHan = new DevExpress.XtraBars.BarButtonItem();
             this.btnSachBiHong = new DevExpress.XtraBars.BarButtonItem();
             this.btnDocGiaDangMuon = new DevExpress.XtraBars.BarButtonItem();
+            this.rbTroGiup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.btnHelp = new DevExpress.XtraBars.BarButtonItem();
             this.barHeaderItem1 = new DevExpress.XtraBars.BarHeaderItem();
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.txtXinChao = new DevExpress.XtraBars.BarHeaderItem();
@@ -193,7 +195,8 @@
             this.rbChucNang.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.rbgQuanLy,
             this.rbgTimKiem,
-            this.rbgThongKe});
+            this.rbgThongKe,
+            this.rbTroGiup});
             this.rbChucNang.Name = "rbChucNang";
             this.rbChucNang.Text = "Chức năng";
             // 
@@ -313,6 +316,23 @@
             this.btnDocGiaDangMuon.Name = "btnDocGiaDangMuon";
             this.btnDocGiaDangMuon.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDocGiaDangMuon_ItemClick);
             // 
+            // rbTroGiup
+            // 
+            this.rbTroGiup.ItemLinks.Add(this.btnHelp);
+            this.rbTroGiup.Name = "rbTroGiup";
+            this.rbTroGiup.Text = "Trợ giúp";
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Caption = "Help";
+            this.btnHelp.Id = 3;
+            this.btnHelp.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.ImageOptions.Image")));
+            this.btnHelp.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnHelp.ImageOptions.LargeImage")));
+            this.btnHelp.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F11);
+            this.btnHelp.LargeWidth = 70;
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnHelp_ItemClick);
+            // 
             // barHeaderItem1
             // 
             this.barHeaderItem1.Caption = "Hê looooooo!";
@@ -349,9 +369,10 @@
             this.barHeaderItem1,
             this.btnSuaThongTin,
             this.btnSachHienCo,
-            this.btnSachBiHong});
+            this.btnSachBiHong,
+            this.btnHelp});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 3;
+            this.ribbon.MaxItemId = 4;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rbChucNang,
@@ -438,5 +459,7 @@
         private DevExpress.XtraBars.BarButtonItem btnSachHienCo;
         private DevExpress.XtraBars.BarButtonItem btnDangXuat;
         private DevExpress.XtraBars.BarButtonItem btnSachBiHong;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbTroGiup;
+        private DevExpress.XtraBars.BarButtonItem btnHelp;
     }
 }

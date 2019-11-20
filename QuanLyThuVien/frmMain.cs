@@ -11,6 +11,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using System.Net;
 using System.Threading;
+using System.Diagnostics;
 
 namespace QuanLyThuVien
 {
@@ -363,6 +364,12 @@ namespace QuanLyThuVien
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {            
-        }        
+        }
+
+        private void btnHelp_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //Process.Start("Library.chm");
+            Help.ShowHelp(this, "file://D:\\Library.chm");
+        }
     }
 }
