@@ -71,6 +71,13 @@ namespace QuanLyThuVien
                 txtSoDienThoai.Focus();
                 return;
             }
+            if ((txtSoDienThoai.EditValue.ToString().Length < 10 || txtSoDienThoai.EditValue.ToString().Length > 11))
+            {
+                XtraMessageBox.Show("Số điện thoại phải có độ dài 10 hoặc 11 số\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtSoDienThoai.EditValue = null;
+                txtSoDienThoai.Focus();
+                return;
+            }
             string sqlC = "insert into student values ('" + con.creatId("S", sqlR) + "', N'" + txtTenDocGia.EditValue.ToString() + "', '" + Convert.ToDateTime(txtNgaySinh.EditValue.ToString()).ToString("yyyy-MM-dd") + "', N'" + txtDiaChi.EditValue.ToString() + "', '" + txtSoDienThoai.EditValue.ToString() + "')";
             if (con.exeData(sqlC))
             {

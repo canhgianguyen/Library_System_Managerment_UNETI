@@ -29,6 +29,29 @@ namespace QuanLyThuVien
                 txtHoTen.Focus();
                 return;
             }
+            
+            if (txtSoDienThoai.EditValue.ToString().Trim().Length > 1)
+            {
+                try
+                {
+                    int sdt = Convert.ToInt32(txtSoDienThoai.EditValue.ToString());
+                }
+                catch (Exception)
+                {
+                    XtraMessageBox.Show("Số điện thoại không hợp lệ\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtSoDienThoai.EditValue = null;
+                    txtSoDienThoai.Focus();
+                    return;
+                }
+                if ((txtSoDienThoai.EditValue.ToString().Length < 10 || txtSoDienThoai.EditValue.ToString().Length > 11))
+                {
+                    XtraMessageBox.Show("Số điện thoại phải có độ dài 10 hoặc 11 số\r\nVui lòng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtSoDienThoai.EditValue = null;
+                    txtSoDienThoai.Focus();
+                    return;
+                }
+            }
+            
             bool check;
             if(chkNam.Checked)
             {
@@ -42,7 +65,6 @@ namespace QuanLyThuVien
             if (con.exeData(sqlU))
             {
                 XtraMessageBox.Show("Thay đổi thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                btnLamMoi.PerformClick();
             }
             else
             {
@@ -52,7 +74,10 @@ namespace QuanLyThuVien
 
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
-
+            txtNgaySinh.EditValue = null;
+            txtSoDienThoai.EditValue = null;
+            txtDiaChi.EditValue = null;
+            txtHoTen.Focus();
         }
 
         private void frmSuaThongTin_Load(object sender, EventArgs e)
